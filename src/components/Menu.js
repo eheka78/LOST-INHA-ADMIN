@@ -1,16 +1,26 @@
-import { logout } from "../api/auth";
+import { useEffect } from "react";
+import { logout, profile } from "../api/auth";
 import styles from "../styles/Main.module.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { MY } from "../assets/MY";
 
 export default function Menu({setShowPopUp, setType}) {
     const location = useLocation();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        profile();
+    }, []);
+
     return (
         <div className={styles.Menu_Container}>
             <img src="./images/user.png" alt="user" />
-            <div>김도담(12234069)</div>
+            { 
+            MY.getMY() 
+                ? <div>{MY.getMY.studentId} / {MY.getMY.name} / {MY.getMY.email} / {MY.getMY.department} / {MY.getMY.role} / </div>
+                : <div>-</div>
+            }
 
             <img src="./images/logout.png" alt="logout" />
             <div
