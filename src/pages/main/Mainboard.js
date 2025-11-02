@@ -5,6 +5,7 @@ import pageStyles from "../../styles/Pagination.module.css";
 import { useEffect, useState } from "react";
 import { getAllPosts, getPost, getPostsByTags, modifyPosts, removePosts } from "../../api/post";
 import { getPostsByKeyword } from './../../api/post';
+import { DateFormat } from './../../utils/DateFormat';
 
 export default function Main({setShowPopUp, setType, setPostId}) {
     const [postList, setPostList] = useState([]);
@@ -194,7 +195,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                                         />
                                     </td>
                                     <td style={{ textAlign:"center" }}>{e.postId}</td>
-                                    <td style={{ textAlign:"center" }}>{e.createdAt}</td>
+                                    <td style={{ textAlign:"center" }}>{DateFormat(e.createdAt)}</td>
                                     <td style={{ textAlign:"center" }}>
                                         {e.type == 'FIND' ? "습득" : "분실"}
                                     </td>
