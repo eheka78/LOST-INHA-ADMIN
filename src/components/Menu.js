@@ -9,16 +9,13 @@ export default function Menu({setShowPopUp, setType}) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        profile();
-    }, []);
-
     return (
         <div className={styles.Menu_Container}>
             <img src="./images/user.png" alt="user" />
-            { 
-            MY.getMY() 
-                ? <div>{MY.getMY.studentId} / {MY.getMY.name} / {MY.getMY.email} / {MY.getMY.department} / {MY.getMY.role} / </div>
+            { MY.getMY() ? 
+                <div>
+                    <span style={{ fontFamily: "Pretendard-ExtraBold" }}>{MY.getMY().studentId} {MY.getMY().name}</span> ({MY.getMY().role})
+                </div>
                 : <div>-</div>
             }
 
