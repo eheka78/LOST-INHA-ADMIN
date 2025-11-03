@@ -46,13 +46,18 @@ export default function ImageSetRegist({ images, setImages }) {
     };
 
 
-    // 좌우 이동
+    
+
+    // 왼쪽 버튼 클릭 시
     const goLeft = () => {
-        setCurrentIndex(prev => (prev > 0 ? prev - 1 : prev));
+        if (images.length === 0) return;
+        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     };
 
+    // 오른쪽 버튼 클릭 시
     const goRight = () => {
-        setCurrentIndex(prev => (prev < images.length - 1 ? prev + 1 : prev));
+        if (images.length === 0) return;
+        setCurrentIndex((prev) => (prev + 1) % images.length);
     };
 
 
