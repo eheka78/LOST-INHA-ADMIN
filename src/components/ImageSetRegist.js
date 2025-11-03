@@ -1,51 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import imageSet from '../styles/ImageSet.module.css';
 
+export default function ImageSetRegist({ images, setImages }) {
+    const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
 
-export default function ImageSetRegist({ images, setImages }){
-    const [currentIndex, setCurrentIndex] = useState(0);  // 몇 번째 사지인지
+    useEffect(() => {
+        console.log("images:", images);
+    }, [images]);
+
 
     // 이미지 업로드 처리
-    const handleUpload = (e) => {
-        const files = Array.from(e.target.files);
+    const handleFileChange = (e) => {
+        const selected = Array.from(e.target.files || []);
 
-        // 파일을 URL로 변환
-        const newImages = files.map(file => URL.createObjectURL(file));
+        setImages(prev => {
+            const merged = [...prev];
 
-        // 기존 이미지에 추가
-        setImages([...images, ...newImages]);
+            selected.forEach(file => {
+                // 중복 방지
+                const duplicate = merged.some(
+                    f => f.name === file.name &&
+                        f.size === file.size &&
+                        f.lastModified === file.lastModified
+                );
+                if (!duplicate) merged.push(file);
+            });
 
-        // 첫 이미지로 이동
-        if (images.length === 0 && newImages.length > 0) {
-            setCurrentIndex(0);
-        }
+            return merged;
+        });
+
+        e.target.value = "";
     };
 
+
+    // 이미지 삭제
     const handleDelete = (index) => {
-    if (!window.confirm("이 사진을 삭제하시겠습니까?")) return;
+        if (!window.confirm("이 사진을 삭제하시겠습니까?")) return;
 
         const newImages = images.filter((_, i) => i !== index);
         setImages(newImages);
 
-    // currentIndex 조정
         if (currentIndex >= newImages.length) {
-            setCurrentIndex(newImages.length - 1);
+            setCurrentIndex(Math.max(0, newImages.length - 1));
         }
     };
 
+
+    // 좌우 이동
     const goLeft = () => {
-        setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+        setCurrentIndex(prev => (prev > 0 ? prev - 1 : prev));
     };
 
     const goRight = () => {
-        setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : prev));
+        setCurrentIndex(prev => (prev < images.length - 1 ? prev + 1 : prev));
     };
 
 
-    {/*이미지 셋 화면*/}
+    // 이미지 src 변환 함수
+    const getImageSrc = (file) => {
+        if (!file) return "";
+        return typeof file === "string" ? file : URL.createObjectURL(file);
+    };
+
+    
     return (
         <div>
-            <div className={imageSet.Container}> 
+            <div className={imageSet.Container}>
                 <img
                     className={imageSet.Icon}
                     src="./images/left.png"
@@ -53,13 +73,13 @@ export default function ImageSetRegist({ images, setImages }){
                     onClick={goLeft}
                     style={{ cursor: "pointer" }}
                 />
-                
+
                 <div className={imageSet.Image_Container}>
                     {images.length > 0 ? (
                         <>
                             <img
                                 className={imageSet.ImageView}
-                                src={images[currentIndex]}
+                                src={getImageSrc(images[currentIndex])}
                                 alt={`img-${currentIndex}`}
                             />
                             <img
@@ -74,8 +94,8 @@ export default function ImageSetRegist({ images, setImages }){
                         <div>이미지가 없습니다.</div>
                     )}
                 </div>
-                
-                <img 
+
+                <img
                     className={imageSet.Icon}
                     src="./images/right.png"
                     alt="right"
@@ -83,7 +103,7 @@ export default function ImageSetRegist({ images, setImages }){
                     style={{ cursor: "pointer" }}
                 />
             </div>
-            
+
             <div className={imageSet.UploadBtn}>
                 <label style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}>
                     <img style={{ height: "25px", marginRight: "8px" }} src="./images/upload.png" alt="upload" />
@@ -93,10 +113,10 @@ export default function ImageSetRegist({ images, setImages }){
                         multiple
                         accept="image/*"
                         style={{ display: "none" }}
-                        onChange={handleUpload}
+                        onChange={handleFileChange}
                     />
                 </label>
             </div>
         </div>
-    )
+    );
 }
