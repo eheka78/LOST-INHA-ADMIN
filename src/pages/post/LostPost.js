@@ -43,7 +43,7 @@ export default function LostPost ({ onClose, setType, postId }) {
 
             {/* 이미지 영역 */}
             <div style={{ marginBottom: "20px" }}>
-                <ImageSet />
+                { postDetail && <ImageSet images={postDetail.imagePath} />}
             </div>
 
             {/* 게시글 내용 */}
