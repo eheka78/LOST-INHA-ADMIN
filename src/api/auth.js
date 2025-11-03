@@ -72,7 +72,7 @@ export const profile = async () => {
 
     } catch (err) {
         console.error('에러 발생:', err);
-        alert("로그아웃 실패");
+        alert("회원 정보 조회 실패");
     }
 };
 
@@ -94,6 +94,7 @@ export const refresh = async () => {
 
     } catch (err) {
         console.error('에러 발생:', err);
+        alert("refresh 실패");
 
         window.location.href = "/Login";
     }
