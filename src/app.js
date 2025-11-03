@@ -6,7 +6,6 @@ import FontTest from "./fonts/FontTest";
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MY } from "./assets/MY";
-import { profile } from "./api/auth";
 import { TokenStore } from "./TokenStore";
 
 
