@@ -1,3 +1,4 @@
+import { redirectDocument } from "react-router-dom";
 import tableStyles from "../../styles/Table2.module.css";
 
 export default function GainTable({ postDetail, receiver }){
@@ -21,7 +22,7 @@ export default function GainTable({ postDetail, receiver }){
                 <tr>
                     <th>습득물에 학번 존재 유무</th>
                     <td>
-                        {postDetail.studentId}
+                        {postDetail.isPersonal ? (postDetail.studentId) : ("-")}
                     </td>
                 </tr>
                 <tr>
@@ -38,7 +39,7 @@ export default function GainTable({ postDetail, receiver }){
                 </tr>
                 <tr>
                     <th>보관 위치</th>
-                    <td>{postDetail.storedLocation}</td>
+                    <td>{ postDetail.storedLocation ? `${postDetail.storedLocation}` : "-" }</td>
                 </tr>
                 <tr>
                     <th>상태</th>
@@ -50,7 +51,13 @@ export default function GainTable({ postDetail, receiver }){
                 </tr>
                 <tr>
                     <th>수령인</th>
-                    <td>{receiver.receiverId} / {receiver.name} / {receiver.email} / {receiver.phoneNumber} / {receiver.studentId}</td>
+                    <td>
+                        { receiver.name ? (
+                            `${receiver.receiverId} / ${receiver.name} / ${receiver.email} / ${receiver.phoneNumber} / ${receiver.studentId}`
+                        ) : (
+                            '-'
+                        ) }
+                    </td>
                 </tr>
                 <tr>
                     <th>제목</th>
@@ -58,7 +65,7 @@ export default function GainTable({ postDetail, receiver }){
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td>{postDetail.content}</td>
+                    <td>{postDetail.content ? postDetail.content : "-"}</td>
                 </tr>
             </tbody>
         </table>

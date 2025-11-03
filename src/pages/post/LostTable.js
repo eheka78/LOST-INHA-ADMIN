@@ -46,7 +46,7 @@ export default function LostTable({ postDetail }){
                     </tr>
                     <tr>
                         <th>내용</th>
-                        <td>{postDetail.content}</td>
+                        <td>{postDetail.content ? postDetail.content : "-"}</td>
                     </tr>
                 </tbody>
             </table>
