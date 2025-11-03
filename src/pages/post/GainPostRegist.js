@@ -109,6 +109,7 @@ export default function GainPostRegist ({ onClose }) {
                             location, locationDetail, storageLocation, 
                             title, content, "FIND", images
                         );
+                        onClose();
                     }}
                 >
                     저장하기

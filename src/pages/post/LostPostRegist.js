@@ -103,7 +103,7 @@ export default function LostPostRegist ({ onClose }) {
                             location, locationDetail, '',
                             title, content, "LOST", images
                         );
-
+                        onClose();
                     }}
                 >
                     저장하기
