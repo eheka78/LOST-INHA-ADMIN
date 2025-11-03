@@ -9,38 +9,58 @@ export default function GainPostEdit ({ onClose, setType, postId }) {
     const [categoryList, setCategoryList] = useState([]);
     const [locationList, setLocationList] = useState([]);
 
+    const [editImagesList, setEditImageList] = useState([]);
+    
     useEffect(() => {
         getAllCategories(setCategoryList);
         getAllLocations(setLocationList);
     }, []);
-
+    
 
     const [postDetail, setPostDetail] = useState([]);
-
+    
     useEffect(() => {
         getPost(setPostDetail, postId);
-        console.log(postDetail);
+        // console.log(postDetail);
     }, [postId]);
-
-
+    
     useEffect(() => {
-        console.log("postDetail:", postDetail);
+        setEditImageList(postDetail.imagePath || []);
+        console.log(postDetail);
     }, [postDetail]);
-
+    
 
     // postDetail.categories: ['카테고리1', '카테고리2'] -> [1, 2]
+    // postDetail.locationName:
     const handleSave = async () => {
+        // 카테고리 ID 변환
         const categoryIds = categoryList
             .filter(c => postDetail.categories.includes(c.name))
             .map(c => c.id);
 
-        setPostDetail((prev) => ({
-            ...prev,
-            categories: categoryIds,
-        }));
+        // locationName -> locationId
+        const selectedLocation = locationList.find(
+            loc => loc.name === postDetail.locationName
+        );
 
-        console.log("보낼 데이터:", postDetail);
-        await modifyPost(postId, postDetail);
+        // 보낼 데이터 객체 생성
+        const updatedPost = {
+            ...postDetail,
+            categories: categoryIds,
+            locationId: selectedLocation?.id || null, // 안전하게 처리
+        };
+
+        // locationName 제거
+        delete updatedPost.locationName;
+        delete updatedPost.imagePath;
+
+        console.log("보낼 데이터:", updatedPost);
+
+        // 상태 업데이트 (필요하면)
+        setPostDetail(updatedPost);
+
+        // 수정 요청
+        await modifyPost(postId, updatedPost, editImagesList);
     };
 
 
@@ -75,7 +95,7 @@ export default function GainPostEdit ({ onClose, setType, postId }) {
 
             {/* 이미지 영역 */}
             <div style={{ marginBottom: "20px" }}>
-                <ImageSetEdit />
+                {postDetail && <ImageSetEdit images={editImagesList} setImages={setEditImageList}  />}
             </div>
 
             {/* 게시글 내용 */}
@@ -122,6 +142,7 @@ export default function GainPostEdit ({ onClose, setType, postId }) {
                     }}
                     onClick={() => {
                         handleSave();
+                        onClose();
                     }}
                 >
                     수정 저장하기

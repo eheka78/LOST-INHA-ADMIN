@@ -80,12 +80,20 @@ export default function GainTableEdit({postDetail, setPostDetail, categoryList, 
                         <td>
                             <select
                                 id="location"
-                                value={postDetail.locationName || ""} // 기본 선택값 지정
-                                onChange={(e) =>
-                                    setPostDetail((prev) => ({ ...prev, locationName: e.target.value }))
-                                }
+                                value={postDetail.locationName || -1}
+                                onChange={(e) => {
+                                    const selectedName = e.target.value;
+                                    setPostDetail((prev) => {
+                                        
+                                        console.log(selectedName);
+                                        return {
+                                            ...prev,
+                                            locationName: selectedName,
+                                        };
+                                    });
+                                }}
                             >
-                                <option key={-1} value="none">--미선택--</option>
+                                <option key={-1} value={-1}>--미선택--</option>
                                 {locationList.map((e) => (
                                     <option key={e.id} value={e.name}>
                                     {e.name}

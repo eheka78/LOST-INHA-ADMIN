@@ -1,4 +1,5 @@
 import api from "./api.js";
+import GainPostEdit from './../pages/post/GainPostEdit';
 
 
 // 게시물 등록
@@ -95,15 +96,23 @@ export const registerPostImage = async (post_id, files) => {
 
 
 // 게시글 수정
-export const modifyPost = async (post_id, postDetail) => {
+export const modifyPost = async (post_id, postDetail, images) => {
     console.log("modifyPost start");
     console.log(postDetail);
+    
+    delete postDetail.imagePath;
     
     try {
         const res = await api.patch('/posts/'+ post_id, postDetail);
 
         console.log("modifyPost: ", res.data);
         alert("『" + postDetail.title + " 』을 수정하였습니다.");
+
+        // 이미지 등록
+        if(images.length > 0 && images){
+            console.log("이미지 등록: ", post_id, images );
+            await modifyPostImage(post_id, images);
+        }
 
     } catch (err) {
         console.error('에러 발생: ', err);
@@ -115,17 +124,30 @@ export const modifyPost = async (post_id, postDetail) => {
 // 게시글 이미지 수정
 export const modifyPostImage = async (post_id, files) => {
     console.log("modifyPostImage start");
-    console.log(files);
+    console.log(post_id, files);
 
     try {
-        const res = await api.patch('/posts/'+ post_id + '/images', {
-            files
+        const formData = new FormData();
+
+        files.forEach(file => {
+            formData.append("files", file);
         });
 
-        console.log("modifyPostImage: ", res.data);
+        console.log("FormData: ");
+        for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+
+        const res = await api.patch(`/posts/${post_id}/images`, formData, {
+            headers: {
+            "Content-Type": "multipart/form-data",
+            },
+        });
+
+        console.log("registerPostImage 성공:", res.data);
     } catch (err) {
-        console.error('에러 발생: ', err);
-        alert("modifyPostImage 실패");
+    console.error("registerPostImage 에러:", err);
+    alert("registerPostImage 실패");
     }
 };
 
