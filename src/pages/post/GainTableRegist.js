@@ -101,9 +101,10 @@ export default function GainTableRegist({
                         <td>
                             <select
                                 id="location"
+                                defaultValue={-1}
                                 onChange={(e) => {setLocation(Number(e.target.value))} }
                             >
-                                <option key={-1} value={-1} selected>--미선택--</option>
+                                <option key={-1} value={-1} defaultSelected>--미선택--</option>
                                 {locationList.map((e) => (
                                     <option key={e.id} value={e.id}>{e.name}</option>
                                 ))}
