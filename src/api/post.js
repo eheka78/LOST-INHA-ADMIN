@@ -5,7 +5,7 @@ import api from "./api.js";
 export const registerPost = async (
     toggleChecked, studentId, categories,
     location, locationDetail, storageLocation, 
-    title, content, type 
+    title, content, type, images
 ) => {
     console.log("registerPost start");
     console.log(toggleChecked, studentId, categories,
@@ -52,6 +52,8 @@ export const registerPost = async (
 
         console.log("registerPost: ", res.data.message, "[게시글 ID: ", res.data.postId, "]");
         alert("『" + title + " 』가 등록되었습니다.");
+
+        await registerPostImage(res.data.postId, images);
 
     } catch (err) {
         console.error('에러 발생: ', err);
