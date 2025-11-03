@@ -10,7 +10,7 @@ export const registerPost = async (
     console.log("registerPost start");
     console.log(toggleChecked, studentId, categories,
         location, locationDetail, storageLocation, 
-        title, content, type
+        title, content, type, images
     );
 
     if(categories.length == 0) { alert("카테고리를 하나 이상 선택하세요."); return; }
@@ -52,8 +52,12 @@ export const registerPost = async (
 
         console.log("registerPost: ", res.data.message, "[게시글 ID: ", res.data.postId, "]");
         alert("『" + title + " 』가 등록되었습니다.");
-
-        await registerPostImage(res.data.postId, images);
+        
+        // 이미지 등록
+        if(images.length > 0 && images){
+            console.log("이미지 등록: ", res.data.postId, images );
+            await registerPostImage(res.data.postId, images);
+        }
 
     } catch (err) {
         console.error('에러 발생: ', err);
@@ -64,16 +68,29 @@ export const registerPost = async (
 
 // 이미지 등록
 export const registerPostImage = async (post_id, files) => {
-    try {
-        const res = await api.post('/posts/'+ post_id + '/images', {
-            files
-        });
-        console.log("registerPostImage: ", res.data);
-        
-    } catch (err) {
-        console.error('에러 발생: ', err);
-        alert("registerPostImage 실패");
+  try {
+    const formData = new FormData();
+
+    files.forEach(file => {
+      formData.append("files", file);
+    });
+
+    console.log("FormData: ");
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
     }
+
+    const res = await api.post(`/posts/${post_id}/images`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("registerPostImage 성공:", res.data);
+  } catch (err) {
+    console.error("registerPostImage 에러:", err);
+    alert("registerPostImage 실패");
+  }
 };
 
 
