@@ -23,10 +23,9 @@ export const login = async (studentId, password, navigate) => {
 
         TokenStore.setToken(res.data.accessToken);
 
-        // console.log(res.data);
-        console.log("로그인 성공");
+        await profile();
 
-        // profile();
+        console.log("로그인 성공");
 
         navigate('/');
     } catch (err) {
@@ -36,6 +35,7 @@ export const login = async (studentId, password, navigate) => {
 };
 
 
+// logout
 export const logout = async (navigate) => {
     console.log("logout start");
 
@@ -43,6 +43,7 @@ export const logout = async (navigate) => {
         await api.post('/auth/logout');
 
         TokenStore.clearToken();
+        MY.clearMY();
 
         alert("로그아웃 성공");
         console.log("로그아웃 성공");
@@ -72,5 +73,28 @@ export const profile = async () => {
     } catch (err) {
         console.error('에러 발생:', err);
         alert("로그아웃 실패");
+    }
+};
+
+
+// refresh
+export const refresh = async () => {
+    console.log("refresh start");
+
+    try {
+        const res = await axios.post('/api/auth/refresh');
+
+        console.log(res.data);
+        MY.setMY(res.data);
+
+        TokenStore.setToken(res.data.accessToken);
+
+        alert("회원 정보 조회");
+        console.log("회원 정보 조회: " + res.data);
+
+    } catch (err) {
+        console.error('에러 발생:', err);
+
+        window.location.href = "/Login";
     }
 };

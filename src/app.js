@@ -7,13 +7,10 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MY } from "./assets/MY";
 import { profile } from "./api/auth";
+import { TokenStore } from "./TokenStore";
 
 
 function App() {
-  useEffect(() => {
-    profile();
-    console.log("App 페이지의 profile 출력: " + MY.getMY());
-  }, [MY.getMY()]);
 
   return (
     <div className="App" style={{ height: "100%" }}>

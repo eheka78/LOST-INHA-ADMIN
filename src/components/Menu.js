@@ -6,13 +6,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MY } from "../assets/MY";
 
 export default function Menu({setShowPopUp, setType}) {
+    const MYInfo = MY.getMY();
     const location = useLocation();
     const navigate = useNavigate();
 
     return (
         <div className={styles.Menu_Container}>
             <img src="./images/user.png" alt="user" />
-            { MY.getMY() ? 
+            { MYInfo ? 
                 <div>
                     <span style={{ fontFamily: "Pretendard-ExtraBold" }}>{MY.getMY().studentId} {MY.getMY().name}</span> ({MY.getMY().role})
                 </div>
