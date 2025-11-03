@@ -16,6 +16,8 @@ export default function Main({setShowPopUp, setType, setPostId}) {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedType, setSelectedType] = useState("ALL");
 
+    const [tempList, setTempList] = useState([]);
+
     useEffect(() => {
         getPostsByTags(setPostList, 1, selectedStatus, selectedType);
     }, [selectedStatus, selectedType])
@@ -59,8 +61,14 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                             onClick={() => {
                                 if (!isNaN(keyword)) {
                                     // 숫자 -> postId를 검색
-                                    getPost(setPostList, Number(keyword));
+                                    console.log("숫자" +Number(keyword) );
+                                    
+                                    getPost(setTempList, Number(keyword));
+                                    console.log("tempList: " + tempList);
+                                    setPostList([tempList]);
+                                    
                                 } else { // 문자열 -> 게시글 제목 검색
+                                    console.log("문자열" + keyword );
                                     getPostsByKeyword(setPostList, keyword, 1);
                                 }
                             }}
@@ -183,7 +191,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                         </thead>
                         
                         <tbody>
-                            {postList.map((e) => (
+                            {Array.isArray(postList) && postList.map((e) => (
                                 <tr key={e.postId}>
                                     <td style={{ textAlign:"center" }}>
                                         <input
