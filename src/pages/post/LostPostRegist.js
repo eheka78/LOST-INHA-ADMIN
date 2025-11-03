@@ -3,8 +3,10 @@ import LostTableRegist from './LostTableRegist';
 import ImageSetEdit from "../../components/ImageSetEdit";
 import { useState } from "react";
 import { registerPost } from "../../api/post";
+import ImageSetRegist from "../../components/ImageSetRegist";
 
 export default function LostPostRegist ({ onClose }) {
+    const [images, setImages] = useState([]);
     const [categories, setCategories] = useState([]);
     const [location, setLocation] = useState(-1);
     const [locationDetail, setLocationDetail] = useState('');
@@ -43,12 +45,17 @@ export default function LostPostRegist ({ onClose }) {
 
             {/* 이미지 영역 */}
             <div style={{ marginBottom: "20px" }}>
-                <ImageSetEdit />
+                <ImageSetRegist
+                    images={images}
+                    setImages={setImages}
+                />
             </div>
 
             {/* 게시글 내용 */}
             <div style={{ marginBottom: "20px" }}>
                 <LostTableRegist 
+                    images={images}
+                    setImages={setImages}
                     categories={categories}
                     setCategories={setCategories} 
                     setLocation={setLocation} 
@@ -94,8 +101,9 @@ export default function LostPostRegist ({ onClose }) {
                         registerPost(
                             false, 0, categories,
                             location, locationDetail, '',
-                            title, content, "LOST"
+                            title, content, "LOST", images
                         );
+
                     }}
                 >
                     저장하기

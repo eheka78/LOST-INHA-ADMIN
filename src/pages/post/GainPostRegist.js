@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registerPost } from "../../api/post";
 import ImageSetEdit from "../../components/ImageSetEdit";
 import GainTableRegist from "./GainTableRegist";
+import ImageSetRegist from "../../components/ImageSetRegist";
 
 export default function GainPostRegist ({ onClose }) {
+    const [images, setImages] = useState([]);
     const [toggleChecked, setToggleChecked] = useState(false);
     const [studentId, setStudentId] = useState('');
     const [categories, setCategories] = useState([]);
@@ -12,6 +14,7 @@ export default function GainPostRegist ({ onClose }) {
     const [storageLocation, setStorageLocation] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+
     
     return (
         <div>
@@ -44,12 +47,17 @@ export default function GainPostRegist ({ onClose }) {
 
             {/* 이미지 영역 */}
             <div style={{ marginBottom: "20px" }}>
-                <ImageSetEdit />
+                <ImageSetRegist
+                    images={images}
+                    setImages={setImages}
+                />
             </div>
 
             {/* 게시글 내용 */}
             <div style={{ marginBottom: "20px" }}>
                 <GainTableRegist 
+                    images={images}
+                    setImages={setImages}
                     toggleChecked={toggleChecked}
                     setToggleChecked={setToggleChecked}
                     setStudentId={setStudentId}
@@ -99,7 +107,7 @@ export default function GainPostRegist ({ onClose }) {
                         registerPost(
                             toggleChecked, studentId, categories,
                             location, locationDetail, storageLocation, 
-                            title, content, "FIND"
+                            title, content, "FIND", images
                         );
                     }}
                 >
