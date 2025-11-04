@@ -24,6 +24,7 @@ export default function ImageSetEdit({ images = [], setImages }) { // images 기
         if (currentIndex >= newImages.length) {
             setCurrentIndex(Math.max(0, newImages.length - 1));
         }
+        console.log(newImages);
     };
 
     const handleUpload = (e) => {
@@ -48,12 +49,6 @@ export default function ImageSetEdit({ images = [], setImages }) { // images 기
         e.target.value = "";    
     };
 
-    // 이미지 src 변환 함수
-    const getImageSrc = (file) => {
-        if (!file) return "";
-        return typeof file === "string" ? file : URL.createObjectURL(file);
-    };
-
 
     return (
         <div>
@@ -71,7 +66,7 @@ export default function ImageSetEdit({ images = [], setImages }) { // images 기
                         <>
                             <img
                                 className={imageSet.ImageView}
-                                src={getImageSrc(images[currentIndex])}
+                                src={`https://lost-inha.kro.kr${images[currentIndex]}`}
                                 alt={`img-${currentIndex}`}
                             />
                             <img
