@@ -47,14 +47,20 @@ export default function GainPost ({ onClose, setType, postId }) {
                     />
                 </div>
             </div>
-
+            
             {/* 이미지 영역 */}
             <div style={{ marginBottom: "20px" }}>
                 { postDetail && <ImageSet images={postDetail.imagePath} />}
             </div>
 
             {/* 게시글 내용 */}
-            <div style={{ marginBottom: "20px" }}>
+            <div style={{ 
+                marginBottom: "20px",
+                overflowY: "auto",
+                maxHeight: "35vh", // 또는 height: "500px" 등 고정 높이 지정
+                paddingRight: "8px",
+                overflowY: "auto" 
+            }}>
                 { postDetail && <GainTable postDetail={postDetail} receiver={receiver} /> }
             </div>
 

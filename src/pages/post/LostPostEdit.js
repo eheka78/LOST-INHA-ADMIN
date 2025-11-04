@@ -97,7 +97,13 @@ export default function LostPostEdit ({ onClose, setType, postId }) {
             </div>
 
             {/* 게시글 내용 */}
-            <div style={{ marginBottom: "20px" }}>
+            <div style={{ 
+                marginBottom: "20px",
+                overflowY: "auto",
+                maxHeight: "20vh", // 또는 height: "500px" 등 고정 높이 지정
+                paddingRight: "8px",
+                overflowY: "auto" 
+            }}>
                 <LostTableEdit
                     postDetail={postDetail}
                     setPostDetail={setPostDetail} 

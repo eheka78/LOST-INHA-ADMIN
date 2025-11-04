@@ -32,7 +32,8 @@ export default function PopUpFrame({type, setType, postId, onClose, onSave}) {
                     backgroundColor: "#F8FAFC",
                     border: "1px solid gray",
                     borderRadius: "15px",
-                    width: "45%",
+                    width: "50%",
+                    maxHeight: "90vh",
                     padding: "20px",
                     boxShadow: "0 4px 10px rgba(0,0,0,0.3)", // 살짝 그림자
                     position: "relative",
