@@ -8,6 +8,9 @@ import { getPostsByKeyword } from './../../api/post';
 import { DateFormat } from './../../utils/DateFormat';
 
 export default function Main({setShowPopUp, setType, setPostId}) {
+    // 페이지 처리
+    const [currentPage, setCurrentPage] = useState(1);
+
     const [postList, setPostList] = useState([]);
     const [keyword, setKeyword] = useState('');
 
@@ -18,9 +21,9 @@ export default function Main({setShowPopUp, setType, setPostId}) {
 
     const [tempList, setTempList] = useState([]);
 
-    useEffect(() => {
-        getPostsByTags(setPostList, 1, selectedStatus, selectedType);
-    }, [selectedStatus, selectedType])
+    // useEffect(() => {
+    //     getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
+    // }, [selectedStatus, selectedType])
 
     
     // 게시글 일괄 삭제, 상태 변경을 위해 checkbox 처리
@@ -34,11 +37,54 @@ export default function Main({setShowPopUp, setType, setPostId}) {
 
     useEffect(() => {
         console.log(postIdList);
-    }, [postIdList])
+    }, [postIdList]);
+    
+    useEffect(() => {
+        setKeyword("");
+    }, [selectedStatus, selectedType]);
 
     useEffect(() => {
-        getAllPosts(setPostList, 1);
-    }, []);
+        if(keyword === "") return;
+
+        setSelectedStatus("");
+        setSelectedType("ALL");
+        
+    }, [keyword])
+
+    // useEffect(() => {
+    //     getAllPosts(setPostList, 1);
+    // }, []);
+
+
+    // 왼쪽 버튼 클릭 시
+    const handlePrev = () => {
+        if(currentPage === 1) return;
+
+        setCurrentPage(currentPage - 1);
+    };
+
+    // 오른쪽 버튼 클릭 시
+    const handleNext = () => {
+        setCurrentPage(currentPage + 1);
+    };
+
+    useEffect(() => {
+        console.log(currentPage, keyword, selectedStatus, selectedType);
+        // 검색어가 없으면 기본 목록
+        if (keyword.trim() === "") {
+            getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
+        } 
+        // 문자열 검색
+        else if (isNaN(keyword)) {
+            getPostsByKeyword(setPostList, keyword, currentPage);
+        } 
+        // 숫자 (postId 검색)는 한 번만 실행되므로 페이지 변경시 호출 안 함
+        else {
+            return;
+        }
+    }, [currentPage, keyword, selectedStatus, selectedType]);
+
+
 
 
     {/*메인보드*/}
@@ -61,7 +107,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                             onClick={() => {
                                 if (!isNaN(keyword)) {
                                     // 숫자 -> postId를 검색
-                                    console.log("숫자" +Number(keyword) );
+                                    console.log("숫자" + Number(keyword) );
                                     
                                     getPost(setTempList, Number(keyword));
                                     console.log("tempList: " + tempList);
@@ -69,7 +115,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                                     
                                 } else { // 문자열 -> 게시글 제목 검색
                                     console.log("문자열" + keyword );
-                                    getPostsByKeyword(setPostList, keyword, 1);
+                                    getPostsByKeyword(setPostList, keyword, currentPage);
                                 }
                             }}
                         >
@@ -230,17 +276,13 @@ export default function Main({setShowPopUp, setType, setPostId}) {
             </div>
             
             <div className={pageStyles.Pagination}>
-                <img src="./images/left.png" />
+                <img src="./images/left.png" onClick={handlePrev} />
 
                 <div className={pageStyles.PaginationNum}>
-                    <button className={pageStyles.SelectedPage}>1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>5</button>
+                    <button className={pageStyles.SelectedPage}>{currentPage}</button>
                 </div>
 
-                <img src="./images/right.png" />
+                <img src="./images/right.png" onClick={handleNext} />
             </div>
 
             <footer className={styles.FooterContainer}>
