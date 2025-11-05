@@ -20,12 +20,6 @@ export default function GainTable({ postDetail, receiver }){
                     <td>2025.10.10.금</td>
                 </tr>
                 <tr>
-                    <th>습득물에 학번 존재 유무</th>
-                    <td>
-                        {postDetail.isPersonal ? (postDetail.studentId) : ("-")}
-                    </td>
-                </tr>
-                <tr>
                     <th>물품 카테고리</th>
                     <td>{postDetail.categories}</td>
                 </tr>

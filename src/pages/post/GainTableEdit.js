@@ -11,41 +11,7 @@ export default function GainTableEdit({postDetail, setPostDetail, categoryList, 
     return (
         <>
             <table className={tableStyles.Table2}>
-                <tbody>          
-                    <tr>
-                        <th>습득물에 학번 존재 유무</th>
-                        <td>
-                            <div style={{ display: "flex", flexDirection: "row", gap: "10px", alignItems: "center" }}>
-                                {/* 토글 체크박스 */}
-                                <input
-                                    type="checkbox"
-                                    id="Toggle"
-                                    className={toggleStyle.Toggle}
-                                    checked={postDetail.isPersonal}
-                                    onChange={(e) =>
-                                        setPostDetail((prev) => ({ ...prev, isPersonal: e.target.value }))
-                                    }
-                                    hidden
-                                />
-                                <label htmlFor="Toggle" className={toggleStyle.ToggleSwitch}>
-                                    <span className={toggleStyle.ToggleButton}></span>
-                                </label>
-
-                                {/* 체크박스 상태에 따라 활성화/비활성화 */}
-                                <input
-                                    type="text"
-                                    disabled={!postDetail.isPersonal}
-                                    placeholder={postDetail.isPersonal ? "작성 가능" : "토글 켜야 입력 가능"}
-                                    style={{
-                                        padding: "5px 10px",
-                                        border: "1px solid #ccc",
-                                        borderRadius: "5px",
-                                        flex: 1,
-                                    }}
-                                />
-                            </div>
-                        </td>
-                    </tr>      
+                <tbody>  
                     <tr>
                         <th>물품 카테고리</th>
                         <td>
