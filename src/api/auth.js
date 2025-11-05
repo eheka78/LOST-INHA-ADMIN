@@ -92,10 +92,13 @@ export const refresh = async () => {
         alert("회원 정보 조회");
         console.log("회원 정보 조회: " + res.data);
 
+        return res.data.accessToken;
     } catch (err) {
         console.error('에러 발생:', err);
         alert("refresh 실패");
 
         window.location.href = "/Login";
     }
+
+    
 };
