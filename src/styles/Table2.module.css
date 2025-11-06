@@ -1,25 +1,22 @@
+/* Table2.module.css */
 .Table2 {
   width: 100%;
+  border-collapse: collapse;
 }
 
-.Table2 th, td {
+.Table2 th,
+.Table2 td {
   border: none;
   margin: 0;
   text-align: left;
+  padding: 5px 10px;
 }
 
-.Table2 tbody tr{
+.Table2 tbody tr {
   height: 30px;
 }
 
-.Table2 [type="text"] {
-  width: 100%;
-  padding: 5px 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
+.Table2 [type="text"],
 .Table2 textarea {
   width: 100%;
   padding: 5px 10px;
@@ -36,20 +33,20 @@
   border-radius: 5px;
 }
 
-.Table2 tbody th{
+.Table2 tbody th {
   background-color: #DADEE7;
   padding: 0 10px;
   text-align: left;
 }
 
-.Table2 tbody td{
+.Table2 tbody td {
   font-family: "Pretendard-Thin";
   background-color: white;
   padding: 0 10px;
   text-align: left;
 }
 
-
+/* 체크박스 열 너비 */
 .Table2 th:nth-child(1),
 .Table2 td:nth-child(1) {
   width: 90px;

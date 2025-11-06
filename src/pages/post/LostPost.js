@@ -1,98 +1,109 @@
-import { Link } from "react-router-dom";
+// LostPost.jsx
+import { useEffect, useState } from "react";
 import ImageSet from "../../components/ImageSet";
 import LostTable from "./LostTable";
-import { useEffect, useState } from "react";
 import { getPost } from "../../api/post";
 
-export default function LostPost ({ onClose, setType, postId }) {
-    const [postDetail, setPostDetail] = useState([]);
+export default function LostPost({ onClose, setType, postId }) {
+  const [postDetail, setPostDetail] = useState({});
 
-    useEffect(() => {
-        getPost(setPostDetail, postId);
-    }, [postId]);
-    
+  useEffect(() => {
+    getPost(setPostDetail, postId);
+  }, [postId]);
 
-    return (
-        <div>
-            {/* Header */}
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottom: "1px solid #ddd",
-                    paddingBottom: "8px",
-                    marginBottom: "15px",
-                }}
-            >
-                <div style={{ fontWeight: "bold" }}>분실 게시물</div>
-                
-                <div>
-                    <img
-                        src="./images/close.png"
-                        alt="close"
-                        onClick={onClose}
-                        style={{
-                            width: "20px",
-                            height: "20px",
-                            cursor: "pointer",
-                        }}
-                    />
-                </div>
-            </div>
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "80vh", // 전체 컴포넌트 높이 지정
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "15px",
+        backgroundColor: "#fff",
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: "1px solid #ddd",
+          paddingBottom: "8px",
+          marginBottom: "15px",
+        }}
+      >
+        <div style={{ fontWeight: "bold" }}>분실 게시물</div>
+        <img
+          src="./images/close.png"
+          alt="close"
+          onClick={onClose}
+          style={{
+            width: "20px",
+            height: "20px",
+            cursor: "pointer",
+          }}
+        />
+      </div>
 
-            {/* 이미지 영역 */}
-            <div style={{ marginBottom: "20px" }}>
-                { postDetail && <ImageSet images={postDetail.imagePath} />}
-            </div>
+      {/* Scrollable content */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          paddingRight: "8px",
+        }}
+      >
+        {/* 이미지 영역 */}
+        {postDetail.imagePath && postDetail.imagePath.length > 0 && (
+          <div style={{ marginBottom: "20px" }}>
+            <ImageSet images={postDetail.imagePath} />
+          </div>
+        )}
 
-            {/* 게시글 내용 */}
-            <div style={{ 
-                marginBottom: "20px",
-                overflowY: "auto",
-                maxHeight: "35vh", // 또는 height: "500px" 등 고정 높이 지정
-                paddingRight: "8px",
-                overflowY: "auto" 
-            }}>
-                { postDetail && <LostTable postDetail={postDetail} /> }
-            </div>
+        {/* 게시글 내용 */}
+        <LostTable postDetail={postDetail} />
+      </div>
 
-            {/* 수정 버튼 */}
-            <div
-                style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "10px",
-                }}
-            >
-                <button
-                    style={{
-                        backgroundColor: "#215294",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "8px 40px",
-                        cursor: "pointer",             
-                    }}
-                    onClick={() => { setType("lost post edit"); }}
-                >
-                    수정하기
-                </button>
+      {/* 버튼 영역 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          marginTop: "15px",
+        }}
+      >
+        <button
+          style={{
+            backgroundColor: "#215294",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 40px",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setType("lost post edit");
+          }}
+        >
+          수정하기
+        </button>
 
-                <button
-                    style={{
-                        backgroundColor: "#215294",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "8px 40px",
-                        cursor: "pointer",
-                    }}
-                >
-                    삭제하기
-                </button>
-            </div>
-        </div>
-    );
+        <button
+          style={{
+            backgroundColor: "#215294",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 40px",
+            cursor: "pointer",
+          }}
+        >
+          삭제하기
+        </button>
+      </div>
+    </div>
+  );
 }

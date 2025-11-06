@@ -1,107 +1,116 @@
-import GainTable from "./GainTable";
-import ImageSet from "../../components/ImageSet";
+// GainPost.jsx
 import { useEffect, useState } from "react";
+import ImageSet from "../../components/ImageSet";
+import GainTable from "./GainTable";
 import { getPost } from "../../api/post";
-import { getReceiver, getReceiverByPost } from "../../api/receiver";
+import { getReceiverByPost } from "../../api/receiver";
 
-export default function GainPost ({ onClose, setType, postId }) {
-    const [postDetail, setPostDetail] = useState([]);
-    const [receiver, setReceiver] = useState([]);
+export default function GainPost({ onClose, setType, postId }) {
+  const [postDetail, setPostDetail] = useState({});
+  const [receiver, setReceiver] = useState({});
 
-    useEffect(() => {
-        getPost(setPostDetail, postId);
-    }, [postId]);
+  // 게시글 불러오기
+  useEffect(() => {
+    getPost(setPostDetail, postId);
+  }, [postId]);
 
-    useEffect(() => {
-        if( postDetail.status != "COMPLETED" ){ return; }
+  // 수령인 불러오기 (완료 상태일 때만)
+  useEffect(() => {
+    if (postDetail.status !== "COMPLETED") return;
+    getReceiverByPost(setReceiver, postId);
+  }, [postDetail, postId]);
 
-        getReceiverByPost(setReceiver, postId);
-    }, [postDetail])
-    
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "80vh",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "15px",
+        backgroundColor: "#fff",
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: "1px solid #ddd",
+          paddingBottom: "8px",
+          marginBottom: "15px",
+        }}
+      >
+        <div style={{ fontWeight: "bold" }}>습득 게시물</div>
+        <img
+          src="./images/close.png"
+          alt="close"
+          onClick={onClose}
+          style={{
+            width: "20px",
+            height: "20px",
+            cursor: "pointer",
+          }}
+        />
+      </div>
 
-    return (
-        <div>
-            {/* Header */}
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottom: "1px solid #ddd",
-                    paddingBottom: "8px",
-                    marginBottom: "15px",
-                }}
-            >
-                <div style={{ fontWeight: "bold" }}>습득 게시물</div>
+      {/* Scrollable Content: 이미지 + 테이블 */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          paddingRight: "8px",
+        }}
+      >
+        {/* 이미지 영역 */}
+        {postDetail.imagePath?.length > 0 && (
+          <div style={{ marginBottom: "20px" }}>
+            <ImageSet images={postDetail.imagePath} />
+          </div>
+        )}
 
-                <div>
-                    <img
-                        src="./images/close.png"
-                        alt="close"
-                        onClick={onClose}
-                        style={{
-                            width: "20px",
-                            height: "20px",
-                            cursor: "pointer",
-                        }}
-                    />
-                </div>
-            </div>
-            
-            {/* 이미지 영역 */}
-            <div style={{ marginBottom: "20px" }}>
-                { postDetail && <ImageSet images={postDetail.imagePath} />}
-            </div>
+        {/* 테이블 영역 */}
+        <GainTable postDetail={postDetail} receiver={receiver} />
+      </div>
 
-            {/* 게시글 내용 */}
-            <div style={{ 
-                marginBottom: "20px",
-                overflowY: "auto",
-                maxHeight: "35vh", // 또는 height: "500px" 등 고정 높이 지정
-                paddingRight: "8px",
-                overflowY: "auto" 
-            }}>
-                { postDetail && <GainTable postDetail={postDetail} receiver={receiver} /> }
-            </div>
+      {/* 버튼 영역 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          marginTop: "15px",
+        }}
+      >
+        <button
+          style={{
+            backgroundColor: "#215294",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 40px",
+            cursor: "pointer",
+          }}
+          onClick={() => setType("gain post edit")}
+        >
+          수정하기
+        </button>
 
-            {/* 수정 버튼 */}
-            <div
-                style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "10px"
-                }}
-            >
-                <button
-                    style={{
-                        backgroundColor: "#215294",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "8px 40px",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => { 
-                        setType("gain post edit");
-                    }}
-                >
-                    수정하기
-                </button>
-
-                <button
-                    style={{
-                        backgroundColor: "#215294",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "8px 40px",
-                        cursor: "pointer",
-                    }}
-                >
-                    삭제하기
-                </button>
-            </div>
-        </div>
-    );
+        <button
+          style={{
+            backgroundColor: "#215294",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 40px",
+            cursor: "pointer",
+          }}
+        >
+          삭제하기
+        </button>
+      </div>
+    </div>
+  );
 }
