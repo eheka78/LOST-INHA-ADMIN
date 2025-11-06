@@ -269,7 +269,7 @@ export const getPostsByTags = async (setPostList, page = 1, status, type, locati
 export const getPostsByKeyword = async (setPostList, keyword, page = 1) => {
     console.log("getPostsByKeyword start: " + keyword);
 
-    if (!keyword) { alert("검색어를 입력해주세요."); }
+    // if (!keyword) { alert("검색어를 입력해주세요."); }
 
     try {
         const res = await api.get('/posts/search', {
@@ -295,16 +295,23 @@ export const getPostsByKeyword = async (setPostList, keyword, page = 1) => {
 export const getPostsByKeywordAndTags = async (setPostList, keyword, status, type, page) => {
     console.log("getPostsByKeywordAndTags start: ", keyword, status, type, page);
 
-    if (!keyword) { alert("검색어를 입력해주세요."); }
+    //if (!keyword) { alert("검색어를 입력해주세요."); }
+    var FilterData = {
+        page: page,
+        keyword: keyword,
+    };
+    if (status != "") {
+        FilterData.status = status;
+        console.log("필터링 상태: ", status);
+    }
+    if (type != "ALL") {
+        FilterData.type = type;
+        console.log("필터링 타입: ", type);
+    }
 
-    try {
+    try {   
         const res = await api.get('/posts/search/tags', {
-            params: { 
-                keyword: keyword,
-                status: status,
-                type: type,
-                page: page
-            }
+            params: FilterData
         });
 
         console.log("getPostsByKeywordAndTags: " + res.data);
@@ -314,6 +321,5 @@ export const getPostsByKeywordAndTags = async (setPostList, keyword, status, typ
     } catch (err) {
         console.error('에러 발생: ', err);
         alert("getPostsByKeywordAndTags 실패");
-        return null;
     }
 };
