@@ -4,11 +4,17 @@ import Menu from "../../components/Menu";
 
 import { useState } from "react";
 import PopUpFrame from "../../components/PopUpFrame";
+import { getAllPosts } from "../../api/post";
 
 export default function MainPage() {
+    const [postList, setPostList] = useState([]);
     const [showPopUp, setShowPopUp] = useState(false);
     const [type, setType] = useState('');
     const [postId, setPostId] = useState(0);
+
+    const fetchPostList = async () => {
+        await getAllPosts(setPostList, 1);
+    };
 
     return (
         <div
@@ -49,10 +55,21 @@ export default function MainPage() {
                     height: "100vh",
                 }}
             >
-                <Mainboard setShowPopUp={setShowPopUp} setType={setType} setPostId={setPostId} />
+                <Mainboard setShowPopUp={setShowPopUp} setType={setType} setPostId={setPostId} postList={postList} setPostList={setPostList} />
             </div>
 
-            {showPopUp && <PopUpFrame type={type} setType={setType} postId={postId} onClose={() => setShowPopUp(false)} />}
+            {showPopUp &&
+                <PopUpFrame
+                    type={type} setType={setType} postId={postId} 
+                    onClose={ 
+                        async () => { 
+                            await fetchPostList();
+                            console.log("closeclosecloseclosecloseclose");
+                            setShowPopUp(false); 
+                        } 
+                    } 
+                />
+            }
         </div>
     )
 }
