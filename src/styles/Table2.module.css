@@ -48,3 +48,9 @@
   padding: 0 10px;
   text-align: left;
 }
+
+
+.Table2 th:nth-child(1),
+.Table2 td:nth-child(1) {
+  width: 90px;
+}
