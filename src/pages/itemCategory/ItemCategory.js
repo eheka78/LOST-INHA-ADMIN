@@ -9,11 +9,15 @@ import { createCategory, deleteCategory, getAllCategories, updateCategory } from
 
 export default function ItemCategory() {
     const [categoryList, setCategoryList] = useState([]);
-    const [newCategory, setNewCategory] = useState([]);
+    const [newCategory, setNewCategory] = useState("");
 
     useEffect(() => {
         getAllCategories(setCategoryList);
     }, []);
+
+    const fetchCategories = () => {
+        getAllCategories(setCategoryList);
+    };
 
     {/*메인보드*/}
     return (
@@ -30,8 +34,12 @@ export default function ItemCategory() {
                 />
                 <button
                     type="submit"
-                    onClick={() => {
-                        createCategory(newCategory);
+                    onClick={async () => {
+                        if (newCategory.trim() === "") return alert("값을 입력하세요.");
+                        await createCategory(newCategory);
+
+                        setNewCategory("");
+                        fetchCategories();
                     }}
                 >
                     추가하기
@@ -47,9 +55,6 @@ export default function ItemCategory() {
                     <table className={tableStyles.Table}>
                         <thead>
                             <tr>
-                                {/* {columns.map((column) => (
-                                    <th key={column}>{column}</th>
-                                ))} */}
                                 <th>번호</th>
                                 <th>카테고리</th>
                                 <th>수정하기</th>
@@ -62,23 +67,25 @@ export default function ItemCategory() {
                                     <td style={{ textAlign:"center" }}>{e.id}</td>
                                     <td style={{ textAlign:"center" }}>{e.name}</td>
                                     <td style={{ textAlign:"center" }}
-                                        onClick={() => {
+                                        onClick={async () => {
                                             const categoryName = prompt("수정할 카테고리 이름을 적으세요");
-                                            if(categoryName === ""){
+                                            if(!categoryName || categoryName.trim() === ""){
                                                 alert("실패하였습니다.");
-                                            } else {
-                                                updateCategory(e.id, categoryName);
+                                                return;
                                             }
+                                            await updateCategory(e.id, categoryName);
+                                            fetchCategories();
                                         }}
                                     >  
                                         수정하기
                                     </td>
                                     <td
                                         style={{ textAlign:"center" }}
-                                        onClick={() => {
+                                        onClick={async () => {
                                             const deleteConfirmMsg = prompt("삭제하면 복구할 수 없습니다. 삭제하려면 카테고리의 이름을 그대로 따라 적으세요.")
                                             if(deleteConfirmMsg === e.name){
-                                                deleteCategory(e.id);
+                                                await deleteCategory(e.id);
+                                                fetchCategories();
                                             } else{
                                                 alert("실패하였습니다.")
                                             }
