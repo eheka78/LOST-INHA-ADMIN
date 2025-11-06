@@ -1,6 +1,6 @@
 import StatusSelect from "../../components/StatusSelect";
 import styles from "../../styles/Mainboard.module.css";
-import tableStyles from "../../styles/Table.module.css";
+import tableStyles from "../../styles/Table3.module.css";
 import pageStyles from "../../styles/Pagination.module.css";
 
 import { useEffect, useState } from "react";
@@ -67,33 +67,35 @@ export default function ItemCategory() {
                                 <tr key={e.id}>
                                     <td style={{ textAlign:"center" }}>{e.id}</td>
                                     <td style={{ textAlign:"center" }}>{e.name}</td>
-                                    <td style={{ textAlign:"center" }}
-                                        onClick={async () => {
-                                            const categoryName = prompt("수정할 카테고리 이름을 적으세요");
-                                            if(!categoryName || categoryName.trim() === ""){
-                                                alert("실패하였습니다.");
-                                                return;
-                                            }
-                                            await updateCategory(e.id, categoryName);
+                                <td 
+                                    style={{ textAlign:"center" }}
+                                    className="action modify"
+                                    onClick={async () => {
+                                        const categoryName = prompt("수정할 카테고리 이름을 적으세요");
+                                        if(!categoryName || categoryName.trim() === ""){
+                                            alert("실패하였습니다.");
+                                            return;
+                                        }
+                                        await updateCategory(e.id, categoryName);
+                                        fetchCategories();
+                                    }}
+                                >
+                                    수정하기
+                                </td>
+
+                                <td className="action delete"
+                                    onClick={async () => {
+                                        const deleteConfirmMsg = prompt("삭제하면 복구할 수 없습니다. 삭제하려면 카테고리의 이름을 그대로 따라 적으세요.")
+                                        if(deleteConfirmMsg === e.name){
+                                            await deleteCategory(e.id);
                                             fetchCategories();
-                                        }}
-                                    >  
-                                        수정하기
-                                    </td>
-                                    <td
-                                        style={{ textAlign:"center" }}
-                                        onClick={async () => {
-                                            const deleteConfirmMsg = prompt("삭제하면 복구할 수 없습니다. 삭제하려면 카테고리의 이름을 그대로 따라 적으세요.")
-                                            if(deleteConfirmMsg === e.name){
-                                                await deleteCategory(e.id);
-                                                fetchCategories();
-                                            } else{
-                                                alert("실패하였습니다.")
-                                            }
-                                        }}   
-                                    >
-                                        삭제하기
-                                    </td>
+                                        } else{
+                                            alert("실패하였습니다.")
+                                        }
+                                    }}
+                                >
+                                    삭제하기
+                                </td>
                                 </tr>
                             ))}
                             
