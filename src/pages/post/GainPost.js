@@ -83,8 +83,7 @@ export default function GainPost ({ onClose, setType, postId }) {
                         cursor: "pointer",
                     }}
                     onClick={() => { 
-                        setType("gain post edit"); 
-                        
+                        setType("gain post edit");
                     }}
                 >
                     수정하기
