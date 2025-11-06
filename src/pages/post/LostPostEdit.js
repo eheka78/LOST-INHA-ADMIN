@@ -7,13 +7,11 @@ import { getAllLocations } from "../../api/location";
 
 export default function LostPostEdit ({ onClose, setType, postId }) {
     const [categoryList, setCategoryList] = useState([]);
-    const [locationList, setLocationList] = useState([]);
     
     const [editImagesList, setEditImageList] = useState([]);
     
     useEffect(() => {
         getAllCategories(setCategoryList);
-        getAllLocations(setLocationList);
     }, []);
     
     const [postDetail, setPostDetail] = useState([]);
@@ -35,21 +33,13 @@ export default function LostPostEdit ({ onClose, setType, postId }) {
             .filter(c => postDetail.categories.includes(c.name))
             .map(c => c.id);
 
-        // locationName -> locationId
-        const selectedLocation = locationList.find(
-            loc => loc.name === postDetail.locationName
-        );
-        console.log(selectedLocation);
 
         // 보낼 데이터 객체 생성
         const updatedPost = {
             ...postDetail,
             categories: categoryIds,
-            locationId: selectedLocation?.id || null, // 안전하게 처리
         };
 
-        // locationName 제거
-        delete updatedPost.locationName;
         delete updatedPost.imagePath;
 
         console.log("보낼 데이터:", updatedPost);
@@ -108,7 +98,6 @@ export default function LostPostEdit ({ onClose, setType, postId }) {
                     postDetail={postDetail}
                     setPostDetail={setPostDetail} 
                     categoryList={categoryList}
-                    locationList={locationList}
                 />
             </div>
 

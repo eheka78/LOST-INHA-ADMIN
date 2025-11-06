@@ -39,44 +39,6 @@ export default function LostTableEdit({postDetail, setPostDetail, categoryList, 
                         </td>
                     </tr>
                     <tr>
-                        <th>분실 장소</th>
-                        <td>
-                            <select
-                                id="location"
-                                value={postDetail.locationName || -1}
-                                onChange={(e) => {
-                                    const selectedName = e.target.value;
-                                    setPostDetail((prev) => {
-                                        
-                                        console.log(selectedName);
-                                        return {
-                                            ...prev,
-                                            locationName: selectedName,
-                                        };
-                                    });
-                                }}
-                            >
-                                <option key={-1} value={-1}>--미선택--</option>
-                                {locationList.map((e) => (
-                                    <option key={e.id} value={e.name}>
-                                    {e.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <input 
-                                type="text" 
-                                style={{ marginTop: "4px" }}
-                                defaultValue={postDetail.locationDetail}
-                                onChange={(e) => {
-                                    setPostDetail((prev) => ({
-                                        ...prev,
-                                        locationDetail: e.target.value,
-                                    }));
-                                }}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
                         <th>제목</th>
                         <td>
                             <input 

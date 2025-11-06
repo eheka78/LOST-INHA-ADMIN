@@ -8,8 +8,6 @@ import ImageSetRegist from "../../components/ImageSetRegist";
 export default function LostPostRegist ({ onClose }) {
     const [images, setImages] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [location, setLocation] = useState(-1);
-    const [locationDetail, setLocationDetail] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -64,8 +62,6 @@ export default function LostPostRegist ({ onClose }) {
                     setImages={setImages}
                     categories={categories}
                     setCategories={setCategories} 
-                    setLocation={setLocation} 
-                    setLocationDetail={setLocationDetail}
                     setTitle={setTitle}
                     setContent={setContent}
                 />
@@ -106,7 +102,7 @@ export default function LostPostRegist ({ onClose }) {
                     onClick={() => {
                         registerPost(
                             false, 0, categories,
-                            location, locationDetail, '',
+                            0, '', '',
                             title, content, "LOST", images
                         );
                         onClose();

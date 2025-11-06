@@ -9,8 +9,6 @@ import { getAllLocations } from "../../api/location";
 export default function LostTableRegist({
     categories, 
     setCategories,
-    setLocation,
-    setLocationDetail,
     setTitle,
     setContent
 }){
@@ -55,26 +53,6 @@ export default function LostTableRegist({
                                     </label>
                                 ))}
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>분실 장소</th>
-                        <td>
-                            <select
-                                id="location"
-                                defaultValue={-1}
-                                onChange={(e) => {setLocation(Number(e.target.value))} }
-                            >
-                                <option key={-1} value={-1}>--미선택--</option>
-                                {locationList.map((e) => (
-                                    <option key={e.id} value={e.id}>{e.name}</option>
-                                ))}
-                            </select>
-                            <input 
-                                type="text" 
-                                style={{ marginTop: "4px" }} 
-                                onChange={(e) => setLocationDetail(e.target.value)} 
-                            />
                         </td>
                     </tr>
                     <tr>

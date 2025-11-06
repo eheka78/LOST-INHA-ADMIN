@@ -25,14 +25,6 @@ export default function LostTable({ postDetail }){
                         <td>{postDetail.categories}</td>
                     </tr>
                     <tr>
-                        <th>분실 장소</th>
-                        <td>
-                            {postDetail.locationName}{" "}
-                            {postDetail.locationDetail 
-                                ? `( ${postDetail.locationDetail} )` : ""}
-                        </td>
-                    </tr>
-                    <tr>
                         <th>상태</th>
                         <td>
                             { postDetail.status === "UNCOMPLETED" ? "미완료" : "" }
