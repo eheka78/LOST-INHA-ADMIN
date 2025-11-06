@@ -1,5 +1,6 @@
 .Table {
   width: 100%;
+  table-layout: auto;
 }
 
 .Table thead {
@@ -7,13 +8,14 @@
   z-index: 1000;
 }
 
-.Table th, td {
+.Table th, .Table td {
   border: none;
   margin: 0;
   text-align: center;
+  padding: 0 8px;
+  white-space: nowrap;
 }
 
-/* sticky 효과 그대로 유지 */
 .Table thead th {
   position: sticky;
   top: 0;
@@ -32,11 +34,24 @@
   left: 0;
 }
 
-.Table tbody tr{
+.Table tbody tr {
   height: 40px;
-}
-
-.Table tbody tr, th{
   background-color: white;
   font-family: 'Pretendard-Light';
 }
+
+.Table tbody td:nth-child(5) {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.Table tbody td:nth-child(1) { width: 30px; }   /* 체크박스 */
+.Table tbody td:nth-child(2) { width: 50px; }   /* 번호 */
+.Table tbody td:nth-child(3) { width: 120px; }  /* 날짜 */
+.Table tbody td:nth-child(4) { width: 70px; }   /* 습득/분실 */
+.Table tbody td:nth-child(6) { width: 100px; }  /* 카테고리 */
+.Table tbody td:nth-child(7) { width: 80px; }   /* 작성자 */
+.Table tbody td:nth-child(8) { width: 80px; }   /* 상태 */
