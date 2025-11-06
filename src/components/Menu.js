@@ -36,6 +36,7 @@ export default function Menu({setShowPopUp, setType}) {
             <img src="./images/logout.png" alt="logout" />
             <div
                 onClick={() => { logout(navigate); }}
+                style={{ cursor: "pointer" }}    
             >
                 로그아웃
             </div>
