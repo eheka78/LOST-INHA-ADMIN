@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ImageSet from "../../components/ImageSet";
 import GainTable from "./GainTable";
-import { getPost } from "../../api/post";
+import { getPost, removePost } from "../../api/post";
 import { getReceiverByPost } from "../../api/receiver";
 
 export default function GainPost({ onClose, setType, postId }) {
@@ -106,6 +106,10 @@ export default function GainPost({ onClose, setType, postId }) {
             borderRadius: "8px",
             padding: "8px 40px",
             cursor: "pointer",
+          }}
+          onClick={() => {
+            removePost(postId);
+            onClose();
           }}
         >
           삭제하기

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ImageSet from "../../components/ImageSet";
 import LostTable from "./LostTable";
-import { getPost } from "../../api/post";
+import { getPost, removePost } from "../../api/post";
 
 export default function LostPost({ onClose, setType, postId }) {
   const [postDetail, setPostDetail] = useState({});
@@ -99,6 +99,10 @@ export default function LostPost({ onClose, setType, postId }) {
             borderRadius: "8px",
             padding: "8px 40px",
             cursor: "pointer",
+          }}
+          onClick={() => {
+            removePost(postId);
+            onClose();
           }}
         >
           삭제하기

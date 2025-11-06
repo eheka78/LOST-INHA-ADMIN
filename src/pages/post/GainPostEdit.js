@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ImageSetEdit from "../../components/ImageSetEdit";
 import GainTableEdit from "./GainTableEdit";
-import { getPost, modifyPost } from "../../api/post";
+import { getPost, modifyPost, removePost } from "../../api/post";
 import { getAllCategories } from "../../api/category";
 import { getAllLocations } from "../../api/location";
 
@@ -151,6 +151,10 @@ export default function GainPostEdit({ onClose, setType, postId }) {
             borderRadius: "8px",
             padding: "8px 40px",
             cursor: "pointer",
+          }}
+          onClick={() => {
+            removePost(postId);
+            onClose();
           }}
         >
           삭제하기

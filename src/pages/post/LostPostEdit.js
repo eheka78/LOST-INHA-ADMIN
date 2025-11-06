@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LostTableEdit from "./LostTableEdit";
 import ImageSetEdit from "../../components/ImageSetEdit";
-import { getPost, modifyPost } from "../../api/post";
+import { getPost, modifyPost, removePost } from "../../api/post";
 import { getAllCategories } from "../../api/category";
 
 export default function LostPostEdit({ onClose, setType, postId }) {
@@ -141,6 +141,10 @@ export default function LostPostEdit({ onClose, setType, postId }) {
             borderRadius: "8px",
             padding: "8px 40px",
             cursor: "pointer",
+          }}
+          onClick={() => {
+            removePost(postId);
+            onClose();
           }}
         >
           삭제하기
