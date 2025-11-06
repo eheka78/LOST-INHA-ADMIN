@@ -30,6 +30,7 @@ export default function ItemCategory() {
             <div className={styles.Add_Input}>
                 <input
                     placeholder="물품 카테고리 추가" 
+                    value={newCategory}
                     onChange={(e) => {setNewCategory(e.target.value);}}
                 />
                 <button
