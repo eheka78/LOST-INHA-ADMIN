@@ -70,13 +70,13 @@ export default function Menu({setShowPopUp, setType}) {
 
             <img src="./images/add.png" alt="add" />
             <div
-                onClick={() => {setShowPopUp(true); setType("regist lost post");}}
+                onClick={() => { setShowPopUp(true); setType("regist lost post");}}
                 style={{ cursor: "pointer" }}    
             >분실 게시글 작성</div>
 
             <img src="./images/add.png" alt="add" />
             <div
-                onClick={() => { setShowPopUp(true); setType("regist gain post"); }}
+                onClick={() => { setShowPopUp(true); setType("regist gain post");}}
                 style={{ cursor: "pointer" }}    
             >습득 게시글 작성</div>
         </div>

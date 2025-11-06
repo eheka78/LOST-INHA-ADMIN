@@ -4,7 +4,7 @@ import Menu from "../../components/Menu";
 
 import { useState } from "react";
 import PopUpFrame from "../../components/PopUpFrame";
-import { getAllPosts } from "../../api/post";
+import { getAllPosts, modifyPosts } from "../../api/post";
 
 export default function MainPage() {
     const [postList, setPostList] = useState([]);
@@ -14,6 +14,13 @@ export default function MainPage() {
 
     const fetchPostList = async () => {
         await getAllPosts(setPostList, 1);
+    };
+
+    // 수령인 등록 화면 저장
+    const handleSave = async () => {
+        await modifyPosts(Array.isArray(postId) ? postId : [postId], "COMPLETED");
+
+        setShowPopUp(false);
     };
 
     return (
@@ -56,6 +63,7 @@ export default function MainPage() {
                 }}
             >
                 <Mainboard
+                    showPopUp={showPopUp}
                     setShowPopUp={setShowPopUp}
                     setType={setType}
                     setPostId={setPostId}
@@ -67,7 +75,8 @@ export default function MainPage() {
             {showPopUp &&
                 <PopUpFrame
                     type={type} setType={setType} postId={postId} 
-                    onClose={async () => { await fetchPostList(); }} 
+                    onClose={ async () => setShowPopUp(false) } 
+                    handleSave={handleSave}
                 />
             }
         </div>

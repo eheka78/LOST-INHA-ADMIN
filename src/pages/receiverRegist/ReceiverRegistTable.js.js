@@ -8,6 +8,7 @@ export default function ReceiverRegistTable ({
     setPhoneNumber,
     setStudentId
 }) {
+    console.log(postId);
     const [localPart, setLocalPart] = useState("");
     const [domainPart, setDomainPart] = useState("");
 

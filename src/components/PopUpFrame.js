@@ -9,8 +9,9 @@ import LostPostRegist from "../pages/post/LostPostRegist";
 import ReceiverRegist from "../pages/receiverRegist/ReceiverRegist";
 
 
-export default function PopUpFrame({type, setType, postId, onClose, onSave}) {
+export default function PopUpFrame({type, setType, postId, onClose, handleSave}) {
     console.log("팝업 open: ", type);
+
 
     return (
         <div
@@ -45,7 +46,7 @@ export default function PopUpFrame({type, setType, postId, onClose, onSave}) {
                 {type==="lost post" ? <LostPost onClose={onClose} setType={setType} postId={postId} /> : <></>}
                 {type==="gain post edit" ? <GainPostEdit onClose={onClose} setType={setType} postId={postId} /> : <></>}
                 {type==="lost post edit" ? <LostPostEdit onClose={onClose} setType={setType} postId={postId} /> : <></>}
-                {type==="regist receiver" ? <ReceiverRegist onClose={onClose} onSave={onSave} postId={postId} /> : <></>}
+                {type==="regist receiver" ? <ReceiverRegist onClose={onClose} postId={postId} handleSave={handleSave} /> : <></>}
 
             </div>
         </div>

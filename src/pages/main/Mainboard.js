@@ -7,12 +7,13 @@ import { getAllPosts, getPost, getPostsByKeywordAndTags, getPostsByTags, modifyP
 import { getPostsByKeyword } from './../../api/post';
 import { DateFormat } from './../../utils/DateFormat';
 
-export default function Main({setShowPopUp, setType, setPostId, postList, setPostList}) {
+export default function MainBoard({showPopUp, setShowPopUp, setType, setPostId, postList, setPostList}) {
     // 페이지 처리
     const [currentPage, setCurrentPage] = useState(1);
 
     const [keyword, setKeyword] = useState('');
 
+    // 일관 삭제, 상태 변경용
     const [postIdList, setPostIdList] = useState([]);
 
     const [selectedStatus, setSelectedStatus] = useState("");
@@ -247,7 +248,15 @@ export default function Main({setShowPopUp, setType, setPostId, postList, setPos
                                     <td className="title" style={{ textAlign: "left", padding: "0 5px" }}>{e.categories}</td>
                                     <td style={{ textAlign:"center" }}>{e.writer}</td>
                                     <td style={{ textAlign:"center" }}>
-                                        <StatusSelect status={e.status} type={e.type} postId={e.postId} />
+                                        <StatusSelect 
+                                            showPopUp={showPopUp} 
+                                            setShowPopUp={setShowPopUp}
+                                            setType={setType} 
+                                            type={e.type} 
+                                            status={e.status} 
+                                            postId={e.postId} 
+                                            setPostId={setPostId}
+                                        />
                                     </td>
                                 </tr>
                             ))}

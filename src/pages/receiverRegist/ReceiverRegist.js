@@ -4,11 +4,12 @@ import ReceiverRegistTable from "./ReceiverRegistTable.js";
 import { useState } from "react";
 import { registerReceiver } from "../../api/receiver.js";
 
-export default function ReceiverRegist ({ onClose, onSave, postId }) {
+export default function ReceiverRegist ({ onClose, handleSave, postId }) {
     const [receiver, setReceiver] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [studentId, setStudentId] = useState('');
+    console.log(postId);
 
 
     return (
@@ -95,7 +96,7 @@ export default function ReceiverRegist ({ onClose, onSave, postId }) {
                     }}
                     onClick={() => {
                         registerReceiver(postId, receiver, email, phoneNumber, studentId) 
-                        onSave();
+                        handleSave();
                     }}
                 >
                     등록하기
