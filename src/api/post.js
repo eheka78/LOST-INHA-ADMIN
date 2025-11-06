@@ -36,18 +36,17 @@ export const registerPost = async (
 
     } else if (type == "LOST") {
         postData = {
-            locationId: location,
             title: title,
             content: content,
             status: "UNCOMPLETED",
             type: type,
             categories: categories
         };
-
-        if (locationDetail !== '') { postData.locationDetail = locationDetail; }
     } else { return; }
 
-    
+    console.log(postData);
+
+
     try {
         const res = await api.post('/posts', postData);
 
