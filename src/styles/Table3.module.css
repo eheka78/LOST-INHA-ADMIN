@@ -1,60 +1,74 @@
-/* 기본 테이블 */
 .Table {
   width: 100%;
-  table-layout: auto;
   border-collapse: collapse;
+  font-family: 'Pretendard', sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .Table thead {
-  position: relative;
+  background: #DADEE7;
+  color: #1a1a1a;
+  font-weight: 600;
+  height: 60px;
+  position: sticky;
+  top: 0;
   z-index: 1000;
 }
 
 .Table th, .Table td {
-  border: 1px solid #ccc;
+  border: none; /* 기존 border 제거 */
   margin: 0;
   text-align: center;
-  padding: 6px 8px;
+  padding: 0 8px;
   white-space: nowrap;
-  font-family: 'Pretendard-Light';
 }
 
-/* 헤더 */
-.Table thead th {
-  position: sticky;
-  top: 0;
-  background-color: #DADEE7;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* 테이블 행 */
 .Table tbody tr {
-  height: 40px;
-  background-color: #fff;
-  transition: background-color 0.2s;
+  height: 50px;
+  background-color: white;
+  font-family: 'Pretendard-Light';
+  transition: background 0.3s ease, transform 0.25s ease-in-out;
 }
 
 .Table tbody tr:hover {
-  background-color: #f1f3f6;
+  background: linear-gradient(90deg, #f0f2f7, #DADEE7);
+  transform: scale(1.015);
+}
+
+.Table tbody tr:nth-child(even) {
+  background-color: #f5f7fa;
 }
 
 /* 컬럼별 폭 */
-.Table tbody td:nth-child(1) { width: 50px; }   /* 번호 */
-.Table tbody td:nth-child(2) { width: 200px; }  /* 카테고리 */
-.Table tbody td:nth-child(3) { width: 80px; }   /* 수정하기 */
-.Table tbody td:nth-child(4) { width: 80px; }   /* 삭제하기 */
+.Table th:nth-child(1), .Table td:nth-child(1) { width: 20px; }   /* 체크박스 */
+.Table th:nth-child(2), .Table td:nth-child(2) { width: 40px; }   /* 번호 */
+.Table th:nth-child(3), .Table td:nth-child(3) { width: 90px; }   /* 날짜 */
+.Table th:nth-child(4), .Table td:nth-child(4) { width: 70px; }   /* 습득/분실 */
+.Table th:nth-child(5), .Table td:nth-child(5) {
+  width: auto;   /* 제목 */
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+.Table th:nth-child(6), .Table td:nth-child(6) { width: 100px; }  /* 카테고리 */
+.Table th:nth-child(7), .Table td:nth-child(7) { width: 80px; }   /* 작성자 */
+.Table th:nth-child(8), .Table td:nth-child(8) { width: 73px; }   /* 상태 */
 
-/* 수정/삭제 스타일 */
+/* 액션 버튼 스타일 */
 .Table tbody td.action {
+  padding: 6px 10px;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.2s;
-  border-radius: 4px;
+  font-size: 0.85em;
 }
 
 .Table tbody td.action.modify {
-  color: #4a90e2; /* 파란색 */
+  color: #4a90e2;
 }
 
 .Table tbody td.action.modify:hover {
@@ -62,7 +76,7 @@
 }
 
 .Table tbody td.action.delete {
-  color: #e94e4e; /* 빨강색 */
+  color: #e94e4e;
 }
 
 .Table tbody td.action.delete:hover {
