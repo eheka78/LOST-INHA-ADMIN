@@ -55,19 +55,19 @@ export default function MainPage() {
                     height: "100vh",
                 }}
             >
-                <Mainboard setShowPopUp={setShowPopUp} setType={setType} setPostId={setPostId} postList={postList} setPostList={setPostList} />
+                <Mainboard
+                    setShowPopUp={setShowPopUp}
+                    setType={setType}
+                    setPostId={setPostId}
+                    postList={postList}
+                    setPostList={setPostList}
+                />
             </div>
 
             {showPopUp &&
                 <PopUpFrame
                     type={type} setType={setType} postId={postId} 
-                    onClose={ 
-                        async () => { 
-                            await fetchPostList();
-                            console.log("closeclosecloseclosecloseclose");
-                            setShowPopUp(false); 
-                        } 
-                    } 
+                    onClose={async () => { await fetchPostList(); }} 
                 />
             }
         </div>
