@@ -35,21 +35,47 @@ export default function Main({setShowPopUp, setType, setPostId}) {
         }
     };
 
+
+    // 어디가 맨 끝 화면인지 모르기 때문에 -> 검색을 호출했을 때, postList가 null이면 그 전 페이지로 돌아간다.
     useEffect(() => {
-        console.log(postIdList);
-    }, [postIdList]);
+        // postList가 없거나 빈 배열이면 이전 페이지로
+        if (!postList || postList.length === 0) {
+            if (currentPage !== 1) {
+                setCurrentPage(currentPage - 1);
+            }
+        }
+    }, [postList])
+
+    useEffect(() => {
+        console.log(currentPage, keyword, selectedStatus, selectedType);
+        console.log("#####################");
+
+        // keyword가 숫자이면 추가로 getPost 호출
+        // if (!isNaN(keyword) && keyword.trim() !== "") {
+        //     getPost(setTempList, Number(keyword));
+        //     return;
+        // }
+
+        // 기본적으로 모든 경우에 getPostsByKeywordAndTags 호출
+        getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
+
+    }, [currentPage, keyword, selectedStatus, selectedType]);
+
+    // useEffect(() => {
+    //     console.log(postIdList);
+    // }, [postIdList]);
     
-    useEffect(() => {
-        setKeyword("");
-    }, [selectedStatus, selectedType]);
+    // useEffect(() => {
+    //     setKeyword("");
+    // }, [selectedStatus, selectedType]);
 
-    useEffect(() => {
-        if(keyword === "") return;
+    // useEffect(() => {
+    //     if(keyword === "") return;
 
-        setSelectedStatus("");
-        setSelectedType("ALL");
+    //     setSelectedStatus("");
+    //     setSelectedType("ALL");
         
-    }, [keyword])
+    // }, [keyword])
 
     // useEffect(() => {
     //     getAllPosts(setPostList, 1);
@@ -68,21 +94,22 @@ export default function Main({setShowPopUp, setType, setPostId}) {
         setCurrentPage(currentPage + 1);
     };
 
-    useEffect(() => {
-        console.log(currentPage, keyword, selectedStatus, selectedType);
-        // 검색어가 없으면 기본 목록
-        if (keyword.trim() === "") {
-            getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
-        } 
-        // 문자열 검색
-        else if (isNaN(keyword)) {
-            getPostsByKeyword(setPostList, keyword, currentPage);
-        } 
-        // 숫자 (postId 검색)는 한 번만 실행되므로 페이지 변경시 호출 안 함
-        else {
-            return;
-        }
-    }, [currentPage, keyword, selectedStatus, selectedType]);
+    // useEffect(() => {
+    //     console.log(currentPage, keyword, selectedStatus, selectedType);
+    //     getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
+    //     // 검색어가 없으면 기본 목록
+    //     if (keyword.trim() === "") {
+    //         getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
+    //     } 
+    //     // 문자열 검색
+    //     else if (isNaN(keyword)) {
+    //         getPostsByKeyword(setPostList, keyword, currentPage);
+    //     } 
+    //     // 숫자 (postId 검색)는 한 번만 실행되므로 페이지 변경시 호출 안 함
+    //     else {
+    //         return;
+    //     }
+    // }, [currentPage, keyword, selectedStatus, selectedType, ]);
 
 
 
@@ -222,7 +249,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                     <table className={tableStyles.Table}>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" /></th>
+                                <th></th>
                                 <th>번호</th>
                                 <th>날짜</th>
                                 <th>습득/분실</th>
