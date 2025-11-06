@@ -233,7 +233,8 @@ export default function Main({setShowPopUp, setType, setPostId, postList, setPos
                                     <td style={{ textAlign:"center" }}>
                                         {e.type == 'FIND' ? "습득" : "분실"}
                                     </td>
-                                    <td style={{ textAlign: "left", padding: "0 5px" }}
+                                    <td
+                                        className="title"
                                         onClick={() => {
                                             setShowPopUp(true);
                                             if(e.type === "FIND"){ setType("gain post"); }
@@ -243,7 +244,7 @@ export default function Main({setShowPopUp, setType, setPostId, postList, setPos
                                     >
                                         {e.title}
                                     </td>
-                                    <td style={{ textAlign: "left", padding: "0 5px" }}>{e.categories}</td>
+                                    <td className="title" style={{ textAlign: "left", padding: "0 5px" }}>{e.categories}</td>
                                     <td style={{ textAlign:"center" }}>{e.writer}</td>
                                     <td style={{ textAlign:"center" }}>
                                         <StatusSelect status={e.status} type={e.type} postId={e.postId} />

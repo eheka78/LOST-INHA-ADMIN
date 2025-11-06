@@ -1,57 +1,66 @@
 .Table {
   width: 100%;
-  table-layout: auto;
+  border-collapse: collapse;
+  font-family: 'Pretendard', sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .Table thead {
-  position: relative;
-  z-index: 1000;
+  background: #DADEE7;
+  color: #1a1a1a;
+  font-weight: 600;
+  height: 60px;
 }
 
 .Table th, .Table td {
   border: none;
   margin: 0;
   text-align: center;
-  padding: 0 8px;
-  white-space: nowrap;
-}
-
-.Table thead th {
-  position: sticky;
-  top: 0;
-  border-top: 0;
-  background-clip: padding-box;
-  background-color: #DADEE7;
-}
-
-.Table thead tr {
-  height: 45px;
-  border: 2px solid black;
-}
-
-.Table tbody th {
-  position: sticky;
-  left: 0;
+  padding: 0 8px; /* 좌우 여백 추가 */
+  white-space: nowrap; /* 기본은 줄바꿈 방지 */
 }
 
 .Table tbody tr {
-  height: 40px;
+  height: 50px;
   background-color: white;
   font-family: 'Pretendard-Light';
+  transition: background 0.3s ease, transform 0.25s ease-in-out;
+}
+
+.Table tbody tr:hover {
+  background: linear-gradient(90deg, #f0f2f7, #DADEE7);
+  transform: scale(1.015);
+}
+
+.Table tbody tr:nth-child(even) {
+  background-color: #f5f7fa;
 }
 
 .Table tbody td:nth-child(5) {
   text-align: left;
-  white-space: nowrap;
+  white-space: nowrap; /* 줄바꿈 방지 */
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 300px;
+  max-width: 300px; /* 필요에 따라 조절 */
 }
 
-.Table tbody td:nth-child(1) { width: 30px; }   /* 체크박스 */
-.Table tbody td:nth-child(2) { width: 50px; }   /* 번호 */
-.Table tbody td:nth-child(3) { width: 120px; }  /* 날짜 */
-.Table tbody td:nth-child(4) { width: 70px; }   /* 습득/분실 */
-.Table tbody td:nth-child(6) { width: 100px; }  /* 카테고리 */
-.Table tbody td:nth-child(7) { width: 80px; }   /* 작성자 */
-.Table tbody td:nth-child(8) { width: 80px; }   /* 상태 */
+/* 액션 버튼 스타일 */
+.Table tbody td.action {
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85em;
+}
+
+/* 컬럼 너비 */
+.Table th:nth-child(1) { width: 20px; }   /* 체크박스 */
+.Table th:nth-child(2) { width: 40px; }   /* 번호 */
+.Table th:nth-child(3) { width: 90px; }  /* 날짜 */
+.Table th:nth-child(4) { width: 70px; }   /* 습득/분실 */
+.Table th:nth-child(5) { width: auto; }   /* 제목은 유동적 */
+.Table th:nth-child(6) { width: 100px; }  /* 카테고리 */
+.Table th:nth-child(7) { width: 80px; }   /* 작성자 */
+.Table th:nth-child(8) { width: 73px; }   /* 상태 */
