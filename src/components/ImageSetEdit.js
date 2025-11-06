@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import imageSet from '../styles/ImageSet.module.css';
 
-export default function ImageSetEdit({ images = [], setImages }) { // images 기본값 []로
+export default function ImageSetEdit({ images = [], setImages, setChangeImage }) { // images 기본값 []로
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handlePrev = () => {
@@ -20,11 +20,13 @@ export default function ImageSetEdit({ images = [], setImages }) { // images 기
 
         const newImages = images.filter((_, i) => i !== index);
         setImages(newImages);
-
+        
         if (currentIndex >= newImages.length) {
             setCurrentIndex(Math.max(0, newImages.length - 1));
         }
         console.log(newImages);
+        
+        setChangeImage(true);
     };
 
     const handleUpload = (e) => {
@@ -42,6 +44,8 @@ export default function ImageSetEdit({ images = [], setImages }) { // images 기
                 );
                 if (!duplicate) merged.push(file);
             });
+            
+            setChangeImage(true);
 
             return merged;
         });

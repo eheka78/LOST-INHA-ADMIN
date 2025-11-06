@@ -9,6 +9,8 @@ export default function LostPostEdit({ onClose, setType, postId }) {
   const [editImagesList, setEditImageList] = useState([]);
   const [postDetail, setPostDetail] = useState([]);
 
+  const [changeImage, setChangeImage] = useState(false);
+
   useEffect(() => {
     getAllCategories(setCategoryList);
   }, []);
@@ -35,7 +37,7 @@ export default function LostPostEdit({ onClose, setType, postId }) {
 
     console.log("보낼 데이터:", updatedPost);
 
-    await modifyPost(postId, updatedPost, editImagesList);
+    await modifyPost(postId, updatedPost, editImagesList, changeImage);
   };
 
   return (
@@ -81,7 +83,7 @@ export default function LostPostEdit({ onClose, setType, postId }) {
       >
         {/* 이미지 영역 */}
         <div style={{ marginBottom: "20px" }}>
-          {postDetail && <ImageSetEdit images={editImagesList} setImages={setEditImageList} />}
+          {postDetail && <ImageSetEdit images={editImagesList} setImages={setEditImageList} setChangeImage={setChangeImage} />}
         </div>
 
         {/* 테이블 영역 */}

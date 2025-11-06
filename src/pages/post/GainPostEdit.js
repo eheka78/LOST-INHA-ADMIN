@@ -10,6 +10,8 @@ export default function GainPostEdit({ onClose, setType, postId }) {
   const [locationList, setLocationList] = useState([]);
   const [editImagesList, setEditImageList] = useState([]);
   const [postDetail, setPostDetail] = useState([]);
+  
+  const [changeImage, setChangeImage] = useState(false);
 
   useEffect(() => {
     getAllCategories(setCategoryList);
@@ -44,7 +46,7 @@ export default function GainPostEdit({ onClose, setType, postId }) {
 
     console.log("보낼 데이터:", updatedPost);
 
-    await modifyPost(postId, updatedPost, editImagesList);
+    await modifyPost(postId, updatedPost, editImagesList, changeImage);
   };
 
   return (

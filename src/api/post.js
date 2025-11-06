@@ -95,7 +95,7 @@ export const registerPostImage = async (post_id, files) => {
 
 
 // 게시글 수정
-export const modifyPost = async (post_id, postDetail, images) => {
+export const modifyPost = async (post_id, postDetail, images, changeImage) => {
     console.log("modifyPost start");
     console.log(postDetail);
     
@@ -108,7 +108,7 @@ export const modifyPost = async (post_id, postDetail, images) => {
         alert("『" + postDetail.title + " 』을 수정하였습니다.");
 
         // 이미지 등록
-        if(images.length > 0 && images){
+        if(changeImage){
             console.log("이미지 등록: ", post_id, images );
             await modifyPostImage(post_id, images);
         }
