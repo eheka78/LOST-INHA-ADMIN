@@ -11,14 +11,13 @@ export default function Menu({setShowPopUp, setType}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("********************************");
         const fetchProfile = async () => {
-        try {
-            const res = await profile();
-            setUserInfo(res);
-        } catch (e) {
-            console.error("프로필 조회 실패", e);
-        }
+            try {
+                const res = await profile();
+                setUserInfo(res);
+            } catch (e) {
+                console.error("프로필 조회 실패", e);
+            }
         };
 
         fetchProfile();
@@ -77,7 +76,7 @@ export default function Menu({setShowPopUp, setType}) {
 
             <img src="./images/add.png" alt="add" />
             <div
-                onClick={() => {setShowPopUp(true); setType("regist gain post");}}
+                onClick={() => { setShowPopUp(true); setType("regist gain post"); }}
                 style={{ cursor: "pointer" }}    
             >습득 게시글 작성</div>
         </div>
