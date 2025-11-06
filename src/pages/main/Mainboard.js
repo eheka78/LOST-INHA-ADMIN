@@ -3,15 +3,14 @@ import styles from "../../styles/Mainboard.module.css";
 import tableStyles from "../../styles/Table.module.css";
 import pageStyles from "../../styles/Pagination.module.css";
 import { useEffect, useState } from "react";
-import { getPost, getPostsByKeywordAndTags, getPostsByTags, modifyPosts, removePosts } from "../../api/post";
+import { getAllPosts, getPost, getPostsByKeywordAndTags, getPostsByTags, modifyPosts, removePosts } from "../../api/post";
 import { getPostsByKeyword } from './../../api/post';
 import { DateFormat } from './../../utils/DateFormat';
 
-export default function Main({setShowPopUp, setType, setPostId}) {
+export default function Main({setShowPopUp, setType, setPostId, postList, setPostList}) {
     // 페이지 처리
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [postList, setPostList] = useState([]);
     const [keyword, setKeyword] = useState('');
 
     const [postIdList, setPostIdList] = useState([]);
@@ -21,10 +20,9 @@ export default function Main({setShowPopUp, setType, setPostId}) {
 
     const [tempList, setTempList] = useState([]);
 
-    // useEffect(() => {
-    //     getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
-    // }, [selectedStatus, selectedType])
-
+    const fetchPostList = async () => {
+        await getAllPosts(setPostList, 1);
+    };
     
     // 게시글 일괄 삭제, 상태 변경을 위해 checkbox 처리
     const handleCheckboxChange = (postId, checked) => {
@@ -48,38 +46,12 @@ export default function Main({setShowPopUp, setType, setPostId}) {
 
     useEffect(() => {
         console.log(currentPage, keyword, selectedStatus, selectedType);
-        console.log("#####################");
-
-        // keyword가 숫자이면 추가로 getPost 호출
-        // if (!isNaN(keyword) && keyword.trim() !== "") {
-        //     getPost(setTempList, Number(keyword));
-        //     return;
-        // }
 
         // 기본적으로 모든 경우에 getPostsByKeywordAndTags 호출
         getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
 
     }, [currentPage, keyword, selectedStatus, selectedType]);
 
-    // useEffect(() => {
-    //     console.log(postIdList);
-    // }, [postIdList]);
-    
-    // useEffect(() => {
-    //     setKeyword("");
-    // }, [selectedStatus, selectedType]);
-
-    // useEffect(() => {
-    //     if(keyword === "") return;
-
-    //     setSelectedStatus("");
-    //     setSelectedType("ALL");
-        
-    // }, [keyword])
-
-    // useEffect(() => {
-    //     getAllPosts(setPostList, 1);
-    // }, []);
 
 
     // 왼쪽 버튼 클릭 시
@@ -93,25 +65,6 @@ export default function Main({setShowPopUp, setType, setPostId}) {
     const handleNext = () => {
         setCurrentPage(currentPage + 1);
     };
-
-    // useEffect(() => {
-    //     console.log(currentPage, keyword, selectedStatus, selectedType);
-    //     getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
-    //     // 검색어가 없으면 기본 목록
-    //     if (keyword.trim() === "") {
-    //         getPostsByTags(setPostList, currentPage, selectedStatus, selectedType);
-    //     } 
-    //     // 문자열 검색
-    //     else if (isNaN(keyword)) {
-    //         getPostsByKeyword(setPostList, keyword, currentPage);
-    //     } 
-    //     // 숫자 (postId 검색)는 한 번만 실행되므로 페이지 변경시 호출 안 함
-    //     else {
-    //         return;
-    //     }
-    // }, [currentPage, keyword, selectedStatus, selectedType, ]);
-
-
 
 
     {/*메인보드*/}
@@ -219,9 +172,12 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                     <span style={{ marginRight: "10px" }}>{postIdList.length}개를 체크하였습니다.</span>
                     
                     <button
-                        onClick={() => {
+                        onClick={async () => {
                             if(window.confirm("삭제하면 복구할 수 없습니다.")){
-                                removePosts(postIdList);
+                                await removePosts(postIdList);
+
+                                await fetchPostList();
+                                
                                 alert("삭제");
                             } else{
                                 alert("취소하였습니다.");
