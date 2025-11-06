@@ -68,7 +68,7 @@ export default function ItemCategory() {
                                     <td style={{ textAlign:"center" }}>{e.id}</td>
                                     <td style={{ textAlign:"center" }}>{e.name}</td>
                                 <td 
-                                    style={{ textAlign:"center" }}
+                                    style={{ textAlign:"center", cursor: "pointer" }}
                                     className="action modify"
                                     onClick={async () => {
                                         const categoryName = prompt("수정할 카테고리 이름을 적으세요");
@@ -83,7 +83,8 @@ export default function ItemCategory() {
                                     수정하기
                                 </td>
 
-                                <td className="action delete"
+                                <td style={{ textAlign:"center", cursor: "pointer" }}
+                                    className="action delete"
                                     onClick={async () => {
                                         const deleteConfirmMsg = prompt("삭제하면 복구할 수 없습니다. 삭제하려면 카테고리의 이름을 그대로 따라 적으세요.")
                                         if(deleteConfirmMsg === e.name){

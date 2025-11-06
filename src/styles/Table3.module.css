@@ -41,23 +41,6 @@
   background-color: #f5f7fa;
 }
 
-/* 컬럼별 폭 */
-.Table th:nth-child(1), .Table td:nth-child(1) { width: 20px; }   /* 체크박스 */
-.Table th:nth-child(2), .Table td:nth-child(2) { width: 40px; }   /* 번호 */
-.Table th:nth-child(3), .Table td:nth-child(3) { width: 90px; }   /* 날짜 */
-.Table th:nth-child(4), .Table td:nth-child(4) { width: 70px; }   /* 습득/분실 */
-.Table th:nth-child(5), .Table td:nth-child(5) {
-  width: auto;   /* 제목 */
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 300px;
-}
-.Table th:nth-child(6), .Table td:nth-child(6) { width: 100px; }  /* 카테고리 */
-.Table th:nth-child(7), .Table td:nth-child(7) { width: 80px; }   /* 작성자 */
-.Table th:nth-child(8), .Table td:nth-child(8) { width: 73px; }   /* 상태 */
-
 /* 액션 버튼 스타일 */
 .Table tbody td.action {
   padding: 6px 10px;
