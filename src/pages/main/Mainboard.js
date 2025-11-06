@@ -46,12 +46,21 @@ export default function MainBoard({showPopUp, setShowPopUp, setType, setPostId, 
     }, [postList])
 
     useEffect(() => {
+        setCurrentPage(1);
         console.log(currentPage, keyword, selectedStatus, selectedType);
 
         // 기본적으로 모든 경우에 getPostsByKeywordAndTags 호출
         getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
 
-    }, [currentPage, keyword, selectedStatus, selectedType]);
+    }, [selectedStatus, selectedType]);
+
+    useEffect(() => {
+        console.log(currentPage, keyword, selectedStatus, selectedType);
+
+        // 기본적으로 모든 경우에 getPostsByKeywordAndTags 호출
+        getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
+
+    }, [currentPage, keyword]);
 
 
 
