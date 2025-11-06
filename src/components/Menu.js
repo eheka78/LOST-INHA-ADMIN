@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { logout, profile } from "../api/auth";
 import styles from "../styles/Main.module.css";
 
@@ -6,18 +6,32 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MY } from "../assets/MY";
 
 export default function Menu({setShowPopUp, setType}) {
-    const MYInfo = MY.getMY();
+    const [userInfo, setUserInfo] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("********************************");
+        const fetchProfile = async () => {
+        try {
+            const res = await profile();
+            setUserInfo(res);
+        } catch (e) {
+            console.error("프로필 조회 실패", e);
+        }
+        };
+
+        fetchProfile();
+    }, []);
 
     return (
         <div className={styles.Menu_Container}>
             <img src="./images/user.png" alt="user" />
-            { MYInfo ? 
+            { userInfo ? 
                 <div>
-                    <span style={{ fontFamily: "Pretendard-ExtraBold" }}>{MY.getMY().studentId} {MY.getMY().name}</span> ({MY.getMY().role})
+                    <span style={{ fontFamily: "Pretendard-ExtraBold" }}>{userInfo.studentId} {userInfo.name}</span> ({userInfo.role})
                 </div>
-                : <div>-</div>
+                : <div>Loading......</div>
             }
 
             <img src="./images/logout.png" alt="logout" />
