@@ -222,9 +222,6 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                     <table className={tableStyles.Table}>
                         <thead>
                             <tr>
-                                {/* {columns.map((column) => (
-                                    <th key={column}>{column}</th>
-                                ))} */}
                                 <th><input type="checkbox" /></th>
                                 <th>번호</th>
                                 <th>날짜</th>
