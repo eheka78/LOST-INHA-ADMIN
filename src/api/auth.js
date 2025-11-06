@@ -22,10 +22,12 @@ export const login = async (studentId, password, navigate) => {
         });
 
         TokenStore.setToken(res.data.accessToken);
-
+        
+        console.log(res.data);
         await profile();
-
+        
         console.log("로그인 성공");
+        alert(MY.getMY().name + "님 로그인하였습니다.");
 
         navigate('/');
     } catch (err) {
@@ -45,7 +47,7 @@ export const logout = async (navigate) => {
         TokenStore.clearToken();
         MY.clearMY();
 
-        alert("로그아웃 성공");
+        alert("로그아웃하였습니다.");
         console.log("로그아웃 성공");
 
         navigate('/login');
@@ -63,12 +65,13 @@ export const profile = async () => {
 
     try {
         const res = await api.get('/auth/profile');
-
+        
         console.log(res.data);
         MY.setMY(res.data);
 
-        alert("회원 정보 조회");
+        //alert("회원 정보 조회");
         console.log("회원 정보 조회: " + res.data);
+        return res.data;
 
     } catch (err) {
         console.error('에러 발생:', err);
@@ -78,27 +81,30 @@ export const profile = async () => {
 
 
 // refresh
-export const refresh = async () => {
-    console.log("refresh start");
+// export const refresh = async () => {
+//     console.log("refresh start");
 
-    try {
-        const res = await axios.post('/api/auth/refresh');
+//     try {
+//         const res = await axios.post("/api/auth/refresh", {}, { withCredentials: true });
 
-        console.log(res.data);
-        MY.setMY(res.data);
+        
+//         await profile();
 
-        TokenStore.setToken(res.data.accessToken);
+//         console.log(res.data);
+//         MY.setMY(res.data);
 
-        alert("회원 정보 조회");
-        console.log("회원 정보 조회: " + res.data);
+//         TokenStore.setToken(res.data.accessToken);
 
-        return res.data.accessToken;
-    } catch (err) {
-        console.error('에러 발생:', err);
-        alert("refresh 실패");
+//         alert("refresh 완료!!!!");
+//         console.log("회원 정보 조회: " + res.data);
 
-        window.location.href = "/Login";
-    }
+//         return res.data.accessToken;
+//     } catch (err) {
+//         console.error('에러 발생:', err);
+//         alert("refresh 실패");
+
+//         window.location.href = "/Login";
+//     }
 
     
-};
+// };
