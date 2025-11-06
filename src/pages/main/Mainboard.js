@@ -3,7 +3,7 @@ import styles from "../../styles/Mainboard.module.css";
 import tableStyles from "../../styles/Table.module.css";
 import pageStyles from "../../styles/Pagination.module.css";
 import { useEffect, useState } from "react";
-import { getAllPosts, getPost, getPostsByTags, modifyPosts, removePosts } from "../../api/post";
+import { getPost, getPostsByKeywordAndTags, getPostsByTags, modifyPosts, removePosts } from "../../api/post";
 import { getPostsByKeyword } from './../../api/post';
 import { DateFormat } from './../../utils/DateFormat';
 
@@ -115,7 +115,7 @@ export default function Main({setShowPopUp, setType, setPostId}) {
                                     
                                 } else { // 문자열 -> 게시글 제목 검색
                                     console.log("문자열" + keyword );
-                                    getPostsByKeyword(setPostList, keyword, currentPage);
+                                    getPostsByKeywordAndTags(setPostList, keyword, selectedStatus, selectedType, currentPage);
                                 }
                             }}
                         >

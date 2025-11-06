@@ -289,3 +289,31 @@ export const getPostsByKeyword = async (setPostList, keyword, page = 1) => {
         return null;
     }
 };
+
+
+// 게시물 키워드, 태그로 검색
+export const getPostsByKeywordAndTags = async (setPostList, keyword, status, type, page) => {
+    console.log("getPostsByKeywordAndTags start: ", keyword, status, type, page);
+
+    if (!keyword) { alert("검색어를 입력해주세요."); }
+
+    try {
+        const res = await api.get('/posts/search/tags', {
+            params: { 
+                keyword: keyword,
+                status: status,
+                type: type,
+                page: page
+            }
+        });
+
+        console.log("getPostsByKeywordAndTags: " + res.data);
+        console.log(res.data);
+
+        setPostList(res.data);
+    } catch (err) {
+        console.error('에러 발생: ', err);
+        alert("getPostsByKeywordAndTags 실패");
+        return null;
+    }
+};
